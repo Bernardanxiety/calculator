@@ -1,0 +1,29 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .75rem .75rem;
+}
+
+header > * {
+    margin: 0;
+}
+
+.output {
+    height: 160px;
+    font-size: 2rem;
+    display: grid;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding: 1rem;
+}
+
+.calculator {
+    background-color: hsl(0, 0%, 95%);
+    margin: 0 auto;
+    width: 320px;
+}
