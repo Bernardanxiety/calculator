@@ -1,5 +1,7 @@
 const grid = document.querySelector('.grid');
 const buttons = document.querySelectorAll('.grid div');
+const display = document.querySelector('.display');
+
 
 buttons.forEach(button => {button.textContent = `${button.getAttribute('id')}`; button.setAttribute('style', `display: grid; place-items: center; background-color: #fff;`)});
 
