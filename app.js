@@ -49,8 +49,13 @@ buttons.forEach(button => {
                 console.log(typeof currentNumber);
                 break;
             case ',':
-                display.textContent+=func.replace(',', '.');
-                console.log(currentNumber);
+                if(display.textContent.includes('.')) {
+
+                }
+                else {
+                    display.textContent+=func.replace(',', '.');
+                    console.log(currentNumber);
+                }
                 break;
             case '/':
                 if(previousNumber===undefined) {
@@ -134,18 +139,36 @@ buttons.forEach(button => {
                     console.log(previousNumber);
                     break;
             case '1/x':
-                currentNumber=display.textContent*1;
-                newNumber=currentNumber*1;
-                
-                
-                display.textContent = (1/newNumber);
-                previousNumber=display.textContent*1;
-                return display.setAttribute('data', `1/(${newNumber})`);;
+                // if(previousNumber==undefined) {
+                //     currentNumber=display.textContent*1;
+                //     newNumber=currentNumber*1;
+                    
+                    
+                //     display.textContent = (1/newNumber);
+                //     previousNumber=display.textContent*1;
+                // }
+                // else {
+                //     currentNumber = 1/currentNumber;
+                //     display.textContent = currentNumber;
+                // }
+                currentNumber = 1/currentNumber;
+                    display.textContent = currentNumber;
+                break;
+                // return display.setAttribute('data', `1/(${newNumber})`);
+            case 'x^2':
+                currentNumber = currentNumber*currentNumber;
+                display.textContent = currentNumber;
+                break;
+            case '<':
+                display.textContent = display.textContent.slice(0, display.textContent.length-1);
+                currentNumber = display.textContent*1;
+                break;
             case '=':
                 result(operator);
                 break;
         }
-        
+        console.log(`previousNumber: ${previousNumber}`);
+        console.log(`currentNumber: ${currentNumber}`);
     })
 
     
@@ -195,6 +218,9 @@ const result = (operator) => {
             break;
     }
     display.setAttribute('data', `${previousNumber} ${operator} ${currentNumber}`);
+    previousNumber = undefined;
+    currentNumber = display.textContent*1;
+    
 }
 
 
