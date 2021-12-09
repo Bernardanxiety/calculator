@@ -2,11 +2,10 @@ const grid = document.querySelector('.grid');
 const buttons = document.querySelectorAll('.grid div');
 const display = document.querySelector('.display');
 
-let plusCount = 0;
 let previousNumber;
 let operator;
 let currentNumber;
-let newNumber;
+let sideNumber;
 
 buttons.forEach(button => {
     // Center each button's textContent and set bgColor to white
@@ -156,12 +155,33 @@ buttons.forEach(button => {
                 break;
                 // return display.setAttribute('data', `1/(${newNumber})`);
             case 'x^2':
-                currentNumber = currentNumber*currentNumber;
+                currentNumber = Math.pow(currentNumber, 2);
+                display.textContent = currentNumber;
+                break;
+            case 'sqrt':
+                console.log(`currentNumber is equal ${currentNumber}`);
+				currentNumber = Math.sqrt(currentNumber);				
                 display.textContent = currentNumber;
                 break;
             case '<':
                 display.textContent = display.textContent.slice(0, display.textContent.length-1);
                 currentNumber = display.textContent*1;
+                break;
+            case '%':
+                currentNumber = currentNumber/100;
+                display.textContent = currentNumber;
+                break;
+            case 'CE':
+                display.textContent = 0;
+                currentNumber = undefined;
+                break;
+            case 'C':
+                previousNumber = undefined;
+                operator = undefined;
+                currentNumber = undefined;
+                sideNumber = undefined;
+                display.textContent = 0;
+                display.setAttribute('data', '');
                 break;
             case '=':
                 result(operator);
@@ -222,6 +242,8 @@ const result = (operator) => {
     currentNumber = display.textContent*1;
     
 }
+
+window.addEventListener('keydown', (e) => console.log(e));
 
 
 
