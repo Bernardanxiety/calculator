@@ -1,11 +1,17 @@
 const grid = document.querySelector('.grid');
 const buttons = document.querySelectorAll('.grid div');
 const display = document.querySelector('.display');
+const historyButton = document.querySelector('#history');
+const history = document.querySelector('.history');
+const historyList = document.querySelector('.history-ul');
 
 let previousNumber;
 let operator;
 let currentNumber;
 let sideNumber;
+let lastCalculation;
+let a;
+let b;
 
 buttons.forEach(button => {
     // Center each button's textContent and set bgColor to white
@@ -15,6 +21,9 @@ buttons.forEach(button => {
     if(button.textContent>=0 || button.textContent<=9 || button.textContent == '+/-' || button.textContent == ',') {
         button.style.fontWeight = 'bold';
         button.style.backgroundColor = '#fff';
+    }
+    if(button.textContent == '=') {
+        button.style.backgroundColor = 'hsl(200, 100%, 75%)';
     }
 
     button.addEventListener('click', (e) => {
@@ -66,7 +75,10 @@ buttons.forEach(button => {
 
                 }
                 else if(currentNumber!==undefined) {
+                    a = previousNumber;
+                    b = currentNumber;
                     calc(operator);
+                    addToHistory(a, b);
                     currentNumber = 0;
                     display.textContent = '0';
                 }
@@ -87,8 +99,11 @@ buttons.forEach(button => {
     
                     }
                     else if(currentNumber!==undefined) {
-                        calc(operator);
-                        currentNumber = 0;
+                        a = previousNumber;
+                    b = currentNumber;
+                    calc(operator);
+                    addToHistory(a, b);
+                        currentNumber = undefined;
                         display.textContent = '0';
                     }
                     else {
@@ -107,8 +122,11 @@ buttons.forEach(button => {
     
                 }
                 else if(currentNumber!==undefined) {
+                    a = previousNumber;
+                    b = currentNumber;
                     calc(operator);
-                    currentNumber = 0;
+                    addToHistory(a, b);
+                    currentNumber = undefined;
                     display.textContent = '0';
                 }
                 else {
@@ -127,8 +145,11 @@ buttons.forEach(button => {
         
                     }
                     else if(currentNumber!==undefined) {
-                        calc(operator);
-                        currentNumber = 0;
+                        a = previousNumber;
+                    b = currentNumber;
+                    calc(operator);
+                    addToHistory(a, b);
+                        currentNumber = undefined;
                         display.textContent = '0';
                     }
                     else {
@@ -185,6 +206,7 @@ buttons.forEach(button => {
                 break;
             case '=':
                 result(operator);
+                // addToHistory();
                 break;
         }
         console.log(`previousNumber: ${previousNumber}`);
@@ -208,33 +230,46 @@ const currentAlgo = () => {
 const calc = (operator) => {
     switch(operator) {
         case '/':
-            return previousNumber/=currentNumber;
+            lastCalculation = previousNumber/=currentNumber;
+            return lastCalculation;
             break;
         case 'X':
-            return previousNumber*=currentNumber;
+            lastCalculation = previousNumber*=currentNumber;
+            return lastCalculation;
             break;
         case '-':
-            return previousNumber-=currentNumber;
+            lastCalculation = previousNumber-=currentNumber;
+            return lastCalculation;
             break;
         case '+':
-            return previousNumber+=currentNumber;
+            lastCalculation = previousNumber+=currentNumber;
+            return lastCalculation;
             break;
     }
+    
 }
 
 const result = (operator) => {
     switch(operator) {
         case '/':
+            lastCalculation = (previousNumber/currentNumber);
             display.textContent = (previousNumber/currentNumber);
+            addToHistory(previousNumber, currentNumber);
             break;
         case 'X':
+            lastCalculation = `${previousNumber * currentNumber}`;
             display.textContent = `${previousNumber * currentNumber}`;
+            addToHistory(previousNumber, currentNumber);
             break;
         case '-':
+            lastCalculation = `${previousNumber - currentNumber}`;
             display.textContent = `${previousNumber - currentNumber}`;
+            addToHistory(previousNumber, currentNumber);
             break;
         case '+':
+            lastCalculation = (previousNumber+currentNumber);
             display.textContent = (previousNumber+currentNumber);
+            addToHistory(previousNumber, currentNumber);
             break;
     }
     display.setAttribute('data', `${previousNumber} ${operator} ${currentNumber}`);
@@ -243,7 +278,34 @@ const result = (operator) => {
     
 }
 
-window.addEventListener('keydown', (e) => console.log(e));
+historyButton.addEventListener('click', () => {
+    document.querySelector('.history-card').classList.toggle('show');
+    document.querySelector('.transparent').classList.toggle('opacity');
+    history.classList.toggle('index');
+})
+
+
+
+const addToHistory = (a, b) => {
+    const li = document.createElement('li');
+    document.querySelector('.history-ul').prepend(li);
+   
+    const p1 = () => {
+        const p = document.createElement('p');
+        p.setAttribute('class', 'history-calc');
+        p.textContent = `${a} ${operator} ${b} =`;
+        li.appendChild(p);
+    }
+    
+    const p2 = () => {
+        const p = document.createElement('p');
+        p.setAttribute('class', 'history-result');
+        p.textContent = `${lastCalculation}`;
+        li.appendChild(p);
+    }
+    p1();
+    p2();
+}
 
 
 
