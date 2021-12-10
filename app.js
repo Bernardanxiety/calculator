@@ -74,17 +74,13 @@ buttons.forEach(button => {
                 else if(currentNumber===undefined) {
 
                 }
-                else if(currentNumber!==undefined) {
+                else {
                     a = previousNumber;
                     b = currentNumber;
                     calc(operator);
                     addToHistory(a, b);
                     currentNumber = 0;
                     display.textContent = '0';
-                }
-                else {
-                // previousNumber = previousNumber/currentNumber;
-
                 }
                 operator = func;
                 console.log(previousNumber);
@@ -98,16 +94,13 @@ buttons.forEach(button => {
                     else if(currentNumber===undefined) {
     
                     }
-                    else if(currentNumber!==undefined) {
+                    else {
                         a = previousNumber;
                     b = currentNumber;
                     calc(operator);
                     addToHistory(a, b);
                         currentNumber = undefined;
                         display.textContent = '0';
-                    }
-                    else {
-                    // previousNumber*=currentNumber;
                     }
                     operator = func;
                     console.log(previousNumber);
@@ -121,16 +114,13 @@ buttons.forEach(button => {
                 else if(currentNumber===undefined) {
     
                 }
-                else if(currentNumber!==undefined) {
+                else {
                     a = previousNumber;
                     b = currentNumber;
                     calc(operator);
                     addToHistory(a, b);
                     currentNumber = undefined;
                     display.textContent = '0';
-                }
-                else {
-                // previousNumber-=currentNumber;
                 }
                 operator = func;
                 console.log(previousNumber);
@@ -144,16 +134,13 @@ buttons.forEach(button => {
                     else if(currentNumber===undefined) {
         
                     }
-                    else if(currentNumber!==undefined) {
+                    else {
                         a = previousNumber;
                     b = currentNumber;
                     calc(operator);
                     addToHistory(a, b);
                         currentNumber = undefined;
                         display.textContent = '0';
-                    }
-                    else {
-                    // previousNumber+=currentNumber;
                     }
                     operator = func;
                     console.log(previousNumber);
