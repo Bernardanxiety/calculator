@@ -74,6 +74,9 @@ buttons.forEach(button => {
                 else if(currentNumber===undefined) {
 
                 }
+                else if(currentNumber===0) {
+                    display.textContent = `You can't divide by 0!`;
+                }
                 else {
                     a = previousNumber;
                     b = currentNumber;
@@ -218,7 +221,15 @@ const calc = (operator) => {
     switch(operator) {
         case '/':
             lastCalculation = previousNumber/=currentNumber;
-            return lastCalculation;
+            if(lastCalculation===Infinity) {
+                previousNumber=undefined;
+                currentNumber=undefined;
+                return display.setAttribute('data', `You can't divide by 0!`);
+            }
+            else {
+                return lastCalculation;
+            }
+            
             break;
         case 'X':
             lastCalculation = previousNumber*=currentNumber;
@@ -239,9 +250,16 @@ const calc = (operator) => {
 const result = (operator) => {
     switch(operator) {
         case '/':
-            lastCalculation = (previousNumber/currentNumber);
-            display.textContent = (previousNumber/currentNumber);
-            addToHistory(previousNumber, currentNumber);
+            if(currentNumber===0) {
+                previousNumber=undefined;
+                currentNumber=undefined;
+                return display.setAttribute('data', `You can't divide by 0!`);
+            }
+            else {
+                lastCalculation = (previousNumber/currentNumber);
+                display.textContent = (previousNumber/currentNumber);
+                addToHistory(previousNumber, currentNumber);
+            }
             break;
         case 'X':
             lastCalculation = `${previousNumber * currentNumber}`;
@@ -290,8 +308,11 @@ const addToHistory = (a, b) => {
         p.textContent = `${lastCalculation}`;
         li.appendChild(p);
     }
-    p1();
-    p2();
+    if(lastCalculation!==Infinity) {
+        p1();
+        p2();
+    }
+    
 }
 
 
